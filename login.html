@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CornSys - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #388E3C;
+            --light-green: #C8E6C9;
+            --golden-yellow: #FFD700;
+            --earth-brown: #8D6E63;
+            --sky-blue: #2196F3;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1601593768793-21d5c1c2c0cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--dark-gray);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .login-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .login-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .login-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            padding-left: 40px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 38px;
+            color: var(--primary-green);
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: var(--earth-brown);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            text-align: center;
+            animation: modalFadeIn 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .modal h3 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .login-container {
+                margin: 20px;
+            }
+            
+            .login-header {
+                padding: 20px;
+            }
+            
+            .login-form {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome Back!</h1>
+            <p>Login to access your Corn Production Dashboard</p>
+        </div>
+        
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="forgot-password">
+                <a href="forgot-password.html">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-block">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="sign-up.html">Sign up</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Login Successful!</h3>
+            <p>Welcome back to CornSys. You're now being redirected to your dashboard.</p>
+            <button id="goToDashboard" class="btn btn-block">
+                <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const successModal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const goToDashboard = document.getElementById('goToDashboard');
+
+        // Form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                alert('Please fill in all fields!');
+                return;
+            }
+            
+            // In a real application, you would send this data to your server
+            // For this demo, we'll just show the success modal
+            
+            // Show success modal
+            successModal.style.display = 'flex';
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Close modal when clicking X button
+        closeModal.addEventListener('click', function() {
+            successModal.style.display = 'none';
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === successModal) {
+                successModal.style.display = 'none';
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+
+        // Go to dashboard button
+        goToDashboard.addEventListener('click', function() {
+            successModal.style.display = 'none';
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+
+        // Auto-redirect after 3 seconds when modal appears
+        successModal.addEventListener('click', function() {
+            setTimeout(function() {
+                window.location.href = 'dashboard.html';
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

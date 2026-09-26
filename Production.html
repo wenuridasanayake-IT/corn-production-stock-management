@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corn Production | AgroStock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse styles from main page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #2c8a4a;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation - Same as main page */
+        header {
+            background-color: #2c8a4a;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .auth-buttons .btn {
+            margin-left: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-login:hover {
+            background-color: white;
+            color: #2c8a4a;
+        }
+
+        .btn-signup {
+            background-color: #ffd700;
+            color: #333;
+            border: 1px solid #ffd700;
+        }
+
+        .btn-signup:hover {
+            background-color: #e6c200;
+            border-color: #e6c200;
+        }
+
+        /* Production Hero Section */
+        .production-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 68px; /* Account for fixed header */
+        }
+
+        .production-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .production-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .production-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Production Dashboard */
+        .production-dashboard {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .dashboard-summary {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-card {
+            margin-bottom: 2rem;
+        }
+
+        .summary-card h3 {
+            font-size: 1.2rem;
+            color: #2c8a4a;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .dashboard-main {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom-color: #2c8a4a;
+            color: #2c8a4a;
+            font-weight: 600;
+        }
+
+        .tab:hover:not(.active) {
+            background-color: #f0f0f0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Production Stages */
+        .production-stages {
+            padding: 5rem 0;
+            background-color: #f5f5f5;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #2c8a4a;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .stage {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .stage::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border: 4px solid #2c8a4a;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::after {
+            right: -12px;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .stage-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stage-content h3 {
+            color: #2c8a4a;
+            margin-bottom: 0.5rem;
+        }
+
+        .stage-content p {
+            color: #0a0000;
+        }
+
+        /* Production Analytics */
+        .production-analytics {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .analytics-card {
+            background-color: #79db6c;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .analytics-card h3 {
+            color: #011b09;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background-color: #eee;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #040404;
+            font-weight: 500;
+        }
+
+        /* Footer - Same as main page */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+ /* Footer */
+        footer {
+            background-color: #92df35;
+            color: rgb(24, 23, 23);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #0b400e;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #05410f;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: rgb(17, 71, 11);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #0d0c0c;
+            font-size: 0.9rem;
+        }
+
+
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+
+            .production-hero {
+                height: auto;
+                padding: 8rem 0 4rem;
+            }
+
+            .production-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .production-hero p {
+                font-size: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .stage {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .stage::after {
+                left: 18px;
+            }
+
+            .left::after, .right::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Agro<span>Stock</span></div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="production.html" class="active">Production</a>
+                    <a href="stockmarket.html">Stock Market</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="product.html">Products</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-login">Login</a>
+                    <a href="#" class="btn btn-signup">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Production Hero Section -->
+    <section class="production-hero">
+        <div class="container">
+            <div class="production-hero-content">
+                <h1>Corn Production Management</h1>
+                <p>Track and optimize your corn production cycle with real-time data and actionable insights.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Dashboard -->
+    <section class="production-dashboard">
+        <div class="container">
+            <div class="section-title">
+                <h2>Production Dashboard</h2>
+                <p>Monitor your corn production activities and performance metrics in one place</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-summary">
+                    <div class="summary-card">
+                        <h3>Current Stage</h3>
+                        <div class="summary-value">Growth</div>
+                        <p>Day 45 of 120</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Planted Area</h3>
+                        <div class="summary-value">120 ha</div>
+                        <p>100% of target</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Estimated Yield</h3>
+                        <div class="summary-value">8.2 t/ha</div>
+                        <p>+5% vs last season</p>
+                    </div>
+                    <div class="summary-card">
+                        <h3>Soil Health</h3>
+                        <div class="summary-value">Good</div>
+                        <p>pH 6.5, N-P-K balanced</p>
+                    </div>
+                </div>
+                
+                <div class="dashboard-main">
+                    <div class="dashboard-tabs">
+                        <div class="tab active" data-tab="tasks">Tasks</div>
+                        <div class="tab" data-tab="weather">Weather</div>
+                        <div class="tab" data-tab="inputs">Inputs</div>
+                        <div class="tab" data-tab="team">Team</div>
+                    </div>
+                    
+                    <div id="tasks" class="tab-content active">
+                        <h3>Today's Tasks</h3>
+                        <ul style="margin-top: 1rem; list-style-position: inside;">
+                            <li style="margin-bottom: 0.5rem;">Irrigation check for Field A</li>
+                            <li style="margin-bottom: 0.5rem;">Pest monitoring - Sections 3-5</li>
+                            <li style="margin-bottom: 0.5rem;">Soil moisture test</li>
+                            <li style="margin-bottom: 0.5rem;">Fertilizer application planning</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="weather" class="tab-content">
+                        <h3>Weather Forecast</h3>
+                        <div style="margin-top: 1rem;">
+                            <p><strong>Today:</strong> Sunny, 28°C, Humidity 45%</p>
+                            <p><strong>Tomorrow:</strong> Partly cloudy, 26°C, Humidity 50%</p>
+                            <p><strong>Next 3 days:</strong> Light rain expected, prepare drainage</p>
+                        </div>
+                    </div>
+                    
+                    <div id="inputs" class="tab-content">
+                        <h3>Inputs Management</h3>
+                        <div style="margin-top: 1rem;">
+                            <p><strong>Fertilizer:</strong> 85% remaining</p>
+                            <p><strong>Pesticides:</strong> Need to reorder (20% left)</p>
+                            <p><strong>Seeds:</strong> Sufficient for next planting</p>
+                        </div>
+                    </div>
+                    
+                    <div id="team" class="tab-content">
+                        <h3>Team Activities</h3>
+                        <div style="margin-top: 1rem;">
+                            <p><strong>Field Team:</strong> Working on irrigation maintenance</p>
+                            <p><strong>Monitoring Team:</strong> Checking growth progress</p>
+                            <p><strong>Logistics:</strong> Preparing for upcoming harvest</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Stages -->
+    <section class="production-stages">
+        <div class="container">
+            <div class="section-title">
+                <h2>Corn Production Cycle</h2>
+                <p>Track each stage of your corn production with our comprehensive tools</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="stage left">
+                    <div class="stage-content">
+                        <h3>Land Preparation</h3>
+                        <p>Soil testing, plowing, and fertilization to create optimal growing conditions.</p>
+                        <p><strong>Duration:</strong> 2-3 weeks</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                </div>
+                <div class="stage right">
+                    <div class="stage-content">
+                        <h3>Planting</h3>
+                        <p>Seed selection and planting with optimal spacing and depth for maximum yield.</p>
+                        <p><strong>Duration:</strong> 1 week</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                </div>
+                <div class="stage left">
+                    <div class="stage-content">
+                        <h3>Germination</h3>
+                        <p>Monitoring soil moisture and temperature for successful seed sprouting.</p>
+                        <p><strong>Duration:</strong> 7-10 days</p>
+                        <p><strong>Status:</strong> Completed</p>
+                    </div>
+                </div>
+                <div class="stage right">
+                    <div class="stage-content current-stage">
+                        <h3>Growth</h3>
+                        <p>Regular irrigation, weed control, and nutrient management during vegetative growth.</p>
+                        <p><strong>Duration:</strong> 60-90 days</p>
+                        <p><strong>Status:</strong> In Progress (Day 45)</p>
+                    </div>
+                </div>
+                <div class="stage left">
+                    <div class="stage-content">
+                        <h3>Tasseling & Pollination</h3>
+                        <p>Critical phase for kernel development, requiring careful monitoring.</p>
+                        <p><strong>Duration:</strong> 10-14 days</p>
+                        <p><strong>Status:</strong> Upcoming</p>
+                    </div>
+                </div>
+                <div class="stage right">
+                    <div class="stage-content">
+                        <h3>Maturity & Harvest</h3>
+                        <p>Determining optimal harvest time based on kernel moisture content.</p>
+                        <p><strong>Duration:</strong> 2-3 weeks</p>
+                        <p><strong>Status:</strong> Upcoming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Analytics -->
+    <section class="production-analytics">
+        <div class="container">
+            <div class="section-title">
+                <h2>Production Analytics</h2>
+                <p>Data-driven insights to optimize your corn production</p>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Yield Prediction</h3>
+                    <div class="chart-placeholder">
+                        Yield Forecast Chart (8.2 t/ha)
+                    </div>
+                    <p style="margin-top: 1rem;">Current growth conditions suggest a 5% increase over last season.</p>
+                </div>
+                <div class="analytics-card">
+                    <h3>Growth Progress</h3>
+                    <div class="chart-placeholder">
+                        Growth Stage Timeline
+                    </div>
+                    <p style="margin-top: 1rem;">On track with historical averages for this variety.</p>
+                </div>
+                <div class="analytics-card">
+                    <h3>Resource Usage</h3>
+                    <div class="chart-placeholder">
+                        Water & Fertilizer Usage
+                    </div>
+                    <p style="margin-top: 1rem;">15% less water used compared to same stage last year.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AgroStock</h3>
+                    <p>Empowering farmers and traders with data-driven corn production and stock market management.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Production</a></li>
+                        <li><a href="#">Stock Market</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Farm Street, AgriCity</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@agrostock.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AgroStock Analytics. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>

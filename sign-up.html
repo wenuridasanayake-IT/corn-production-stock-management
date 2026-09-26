@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CornSys - Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #388E3C;
+            --light-green: #C8E6C9;
+            --golden-yellow: #FFD700;
+            --earth-brown: #8D6E63;
+            --sky-blue: #2196F3;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--dark-gray);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .signup-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .signup-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .signup-form {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-green);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-green);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            text-align: center;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .modal h3 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .signup-container {
+                margin: 20px;
+            }
+            
+            .signup-header {
+                padding: 20px;
+            }
+            
+            .signup-form {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>Create Your Account</h1>
+            <p>Join CornSys to manage your corn production and stock</p>
+        </div>
+        
+        <form class="signup-form" id="signupForm">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" required minlength="8">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" required minlength="8">
+            </div>
+            
+            <button type="submit" class="btn btn-block">Sign Up</button>
+            
+            <div class="login-link">
+                Already have an account? <a href="login.html">Log in</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Account Created Successfully!</h3>
+            <p>Your CornSys account has been created. You can now access your dashboard to manage your corn production and stock.</p>
+            <a href="dashboard.html" class="btn btn-block">Go to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Simple validation
+            if (password !== confirmPassword) {
+                alert("Passwords don't match!");
+                return;
+            }
+            
+            // In a real application, you would send this data to your server
+            // For this demo, we'll just show the success modal
+            
+            // Show success modal
+            document.getElementById('successModal').style.display = 'flex';
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('successModal')) {
+                document.getElementById('successModal').style.display = 'none';
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

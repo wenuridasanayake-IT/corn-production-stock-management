@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corn Products | AgroStock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse styles from main page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #2c8a4a;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation - Same as main page */
+        header {
+            background-color: #2c8a4a;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .auth-buttons .btn {
+            margin-left: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-login:hover {
+            background-color: white;
+            color: #2c8a4a;
+        }
+
+        .btn-signup {
+            background-color: #ffd700;
+            color: #333;
+            border: 1px solid #ffd700;
+        }
+
+        .btn-signup:hover {
+            background-color: #e6c200;
+            border-color: #e6c200;
+        }
+
+        /* Products Hero */
+        .products-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 68px; /* Account for fixed header */
+        }
+
+        .products-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .products-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .products-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Product Categories */
+        .product-categories {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .category-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .category-card:hover .category-img img {
+            transform: scale(1.1);
+        }
+
+        .category-info {
+            padding: 1.5rem;
+        }
+
+        .category-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c8a4a;
+        }
+
+        .category-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .category-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: #2c8a4a;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .category-btn:hover {
+            background-color: #247a3a;
+        }
+
+        /* Featured Products */
+        .featured-products {
+            padding: 5rem 0;
+            background-color: #f5f5f5;
+        }
+
+        .product-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-filter {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: #eee;
+            transition: all 0.3s;
+        }
+
+        .product-filter.active {
+            background-color: #2c8a4a;
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c8a4a;
+        }
+
+        .product-rating {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .product-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: #2c8a4a;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .product-btn:hover {
+            background-color: #247a3a;
+        }
+
+        .wishlist-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            background-color: #ffd700;
+            color: white;
+        }
+
+        /* Bulk Order Section */
+        .bulk-order {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .order-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 3rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .order-container h2 {
+            margin-bottom: 1.5rem;
+            color: #2c8a4a;
+        }
+
+        .order-container p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .order-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #ffd700;
+            color: #333;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .order-btn:hover {
+            background-color: #e6c200;
+        }
+
+        /* Footer - Same as main page */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+
+            .products-hero {
+                height: auto;
+                padding: 8rem 0 4rem;
+            }
+
+            .products-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .products-hero p {
+                font-size: 1rem;
+            }
+
+            .product-filters {
+                flex-wrap: wrap;
+            }
+
+            .order-container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Agro<span>Stock</span></div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="production.html">Production</a>
+                    <a href="stockmarket.html">Stock Market</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="product.html" class="active">Products</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-login">Login</a>
+                    <a href="#" class="btn btn-signup">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Products Hero -->
+    <section class="products-hero">
+        <div class="container">
+            <div class="products-hero-content">
+                <h1>Premium Corn Products</h1>
+                <p>High-quality corn products for consumers, industries, and agricultural needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="product-categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Product Categories</h2>
+                <p>Explore our wide range of corn-based products</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="images/freshcorn.jpg" alt="Fresh Corn">
+                    </div>
+                    <div class="category-info">
+                        <h3>Fresh Corn</h3>
+                        <p>Sweet and delicious corn for direct consumption and cooking.</p>
+                        <a href="veiwdetails.html" class="category-btn">View Products</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Processed Products">
+                    </div>
+                    <div class="category-info">
+                        <h3>Processed Products</h3>
+                        <p>Corn flour, cornmeal, and other processed corn products.</p>
+                        <a href="veiwdetails.html" class="category-btn">View Products</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="images/cornoil.jpg" alt="Corn Oil">
+                    </div>
+                    <div class="category-info">
+                        <h3>Corn Oil</h3>
+                        <p>Healthy cooking oil extracted from premium corn kernels.</p>
+                        <a href="veiwdetails.html" class="category-btn">View Products</a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Animal Feed">
+                    </div>
+                    <div class="category-info">
+                        <h3>Animal Feed</h3>
+                        <p>Nutritious corn-based feed for livestock and poultry.</p>
+                        <a href="veiwdetails.html" class="category-btn">View Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Products</h2>
+                <p>Our most popular corn products</p>
+            </div>
+            
+            <div class="product-filters">
+                <div class="product-filter active">All</div>
+                <div class="product-filter">Fresh</div>
+                <div class="product-filter">Processed</div>
+                <div class="product-filter">Oil</div>
+                <div class="product-filter">Feed</div>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                     <img src="images/sweetcorn.jpg" alt="Sweet Corn">
+                    </div>
+                    <div class="product-info">
+                        <h3>Sweet Corn</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(124)</span>
+                        </div>
+                        <p>Freshly harvested sweet corn, perfect for direct consumption and cooking.</p>
+                        <div class="product-price">$2.99 / kg</div>
+                        <div class="product-actions">
+                            <a href="#" class="product-btn">Add to Cart</a>
+                            <a href="#" class="wishlist-btn"><i class="far fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/cornflour.jpg" alt="Corn Flour">
+                    </div>
+                    <div class="product-info">
+                        <h3>Corn Flour</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(87)</span>
+                        </div>
+                        <p>Premium quality corn flour for baking and cooking needs.</p>
+                        <div class="product-price">$1.49 / lb</div>
+                        <div class="product-actions">
+                            <a href="#" class="product-btn">Add to Cart</a>
+                            <a href="#" class="wishlist-btn"><i class="far fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Corn Oil">
+                    </div>
+                    <div class="product-info">
+                        <h3>Corn Oil</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(215)</span>
+                        </div>
+                        <p>Healthy cooking oil extracted from corn kernels.</p>
+                        <div class="product-price">$4.99 / liter</div>
+                        <div class="product-actions">
+                            <a href="#" class="product-btn">Add to Cart</a>

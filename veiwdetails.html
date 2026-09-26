@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corn Products Catalog</title>
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --dark-green: #388E3C;
+            --light-yellow: #FFF9C4;
+            --golden-yellow: #FFD700;
+            --earth-brown: #8D6E63;
+            --sky-blue: #2196F3;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+
+        .product-category {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: var(--white);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-green), var(--golden-yellow));
+        }
+
+        h2 {
+            color: var(--dark-green);
+            font-size: 1.8rem;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--primary-green);
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .product-card {
+            width: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--white);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            height: 160px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 3px solid var(--golden-yellow);
+        }
+
+        .product-content {
+            padding: 15px;
+        }
+
+        h3 {
+            color: var(--dark-green);
+            margin: 10px 0;
+            font-size: 1.3rem;
+        }
+
+        .company-info {
+            padding: 12px;
+            background-color: var(--light-yellow);
+            border-radius: 8px;
+            font-size: 0.95em;
+            border-left: 4px solid var(--sky-blue);
+            margin-top: 10px;
+        }
+
+        .company-info strong {
+            color: var(--earth-brown);
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--golden-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--dark-green);
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #92df35;
+            color: rgb(24, 23, 23);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #0b400e;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #05410f;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: rgb(17, 71, 11);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #0d0c0c;
+            font-size: 0.9rem;
+        }
+
+
+        @media (max-width: 768px) {
+            .product-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-wrapper {
+                padding: 10px;
+            }
+            
+            .product-category {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Golden Harvest Corn Products</h1>
+        <div class="tagline">Premium Quality From Farm to Table</div>
+    </header>
+    
+    <div class="content-wrapper">
+        <div class="product-category">
+            <h2>Fresh Corn</h2>
+            <div class="product-list">
+                <div class="product-card">
+                    <img src="images/sweet-corn.jpg" alt="Sweet Corn" class="product-image">
+                    <div class="product-content">
+                        <h3>Sweet Corn</h3>
+                        <div class="company-info">
+                            <strong>Supplier:</strong> GreenFields Agribusiness<br>
+                            <strong>Location:</strong> Iowa, USA<br>
+                            <strong>Certification:</strong> USDA Organic
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/white-corn.jpg" alt="White Corn" class="product-image">
+                    <div class="product-content">
+                        <h3>White Corn</h3>
+                        <div class="company-info">
+                            <strong>Supplier:</strong> Midwest Grain Co.<br>
+                            <strong>Location:</strong> Nebraska, USA<br>
+                            <strong>Certification:</strong> Non-GMO Project Verified
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-category">
+            <h2>Processed Corn Products</h2>
+            <div class="product-list">
+                <div class="product-card">
+                    <img src="images/cornflour.jpg" alt="Corn Flour" class="product-image">
+                    <div class="product-content">
+                        <h3>Corn Flour</h3>
+                        <div class="company-info">
+                            <strong>Manufacturer:</strong> Golden Grains Milling<br>
+                            <strong>Location:</strong> Illinois, USA<br>
+                            <strong>Packaging:</strong> 5kg, 10kg, 25kg bags
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/corn-meal.jpg" alt="Cornmeal" class="product-image">
+                    <div class="product-content">
+                        <h3>Cornmeal</h3>
+                        <div class="company-info">
+                            <strong>Manufacturer:</strong> Harvest Foods Inc.<br>
+                            <strong>Location:</strong> Indiana, USA<br>
+                            <strong>Varieties:</strong> Fine, Medium, Coarse grind
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/corn-chips.jpg" alt="Corn Chips" class="product-image">
+                    <div class="product-content">
+                        <h3>Corn Chips</h3>
+                        <div class="company-info">
+                            <strong>Manufacturer:</strong> CrispSnack Foods<br>
+                            <strong>Location:</strong> Texas, USA<br>
+                            <strong>Flavors:</strong> Original, BBQ, Nacho Cheese
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-category">
+            <h2>Corn Oil</h2>
+            <div class="product-list">
+                <div class="product-card">
+                    <img src="images/refined-corn-oil.jpg" alt="Refined Corn Oil" class="product-image">
+                    <div class="product-content">
+                        <h3>Refined Corn Oil</h3>
+                        <div class="company-info">
+                            <strong>Producer:</strong> PureOils Refinery<br>
+                            <strong>Location:</strong> Minnesota, USA<br>
+                            <strong>Specifications:</strong> High smoke point, 1L bottles
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/organic-corn-oil.jpg" alt="Organic Corn Oil" class="product-image">
+                    <div class="product-content">
+                        <h3>Organic Corn Oil</h3>
+                        <div class="company-info">
+                            <strong>Producer:</strong> Nature's Best Oils<br>
+                            <strong>Location:</strong> California, USA<br>
+                            <strong>Certification:</strong> USDA Organic, Non-GMO
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-category">
+            <h2>Animal Feed</h2>
+            <div class="product-list">
+                <div class="product-card">
+                    <img src="images/corn-silage.jpg" alt="Corn Silage" class="product-image">
+                    <div class="product-content">
+                        <h3>Corn Silage</h3>
+                        <div class="company-info">
+                            <strong>Supplier:</strong> AgriFeed Solutions<br>
+                            <strong>Location:</strong> Wisconsin, USA<br>
+                            <strong>For:</strong> Dairy cattle feed
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/corn-gulten-meal.jpg" alt="Corn Gluten Meal" class="product-image">
+                    <div class="product-content">
+                        <h3>Corn Gluten Meal</h3>
+                        <div class="company-info">
+                            <strong>Supplier:</strong> NutriFeed Mills<br>
+                            <strong>Location:</strong> Ohio, USA<br>
+                            <strong>Protein Content:</strong> 60%
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="images/mixed-corn-feed.jpg" alt="Mixed Corn Feed" class="product-image">
+                    <div class="product-content">
+                        <h3>Mixed Corn Feed</h3>
+                        <div class="company-info">
+                            <strong>Supplier:</strong> FarmBest Feeds<br>
+                            <strong>Location:</strong> Missouri, USA<br>
+                            <strong>For:</strong> Poultry and swine
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AgroStock</h3>
+                    <p>Empowering farmers and traders with data-driven corn production and stock market management.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Production</a></li>
+                        <li><a href="#">Stock Market</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Farm Street, AgriCity</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@agrostock.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AgroStock Analytics. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>

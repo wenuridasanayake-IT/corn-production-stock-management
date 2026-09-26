@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroStock | Corn Production & Market System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: #2c8a4a;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #2c8a4a;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .auth-buttons .btn {
+            margin-left: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-login:hover {
+            background-color: white;
+            color: #2c8a4a;
+        }
+
+        .btn-signup {
+            background-color: #ffd700;
+            color: #333;
+            border: 1px solid #ffd700;
+        }
+
+        .btn-signup:hover {
+            background-color: #e6c200;
+            border-color: #e6c200;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .hero-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #2c8a4a;
+            color: white;
+            border: 1px solid #2c8a4a;
+        }
+
+        .btn-primary:hover {
+            background-color: #247a3a;
+            border-color: #247a3a;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #2c8a4a;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Corn Products Section */
+        .products {
+            padding: 5rem 0;
+            background-color: #f5f5f5;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c8a4a;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: #2c8a4a;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .product-btn:hover {
+            background-color: #247a3a;
+        }
+
+        /* Market Data Section */
+        .market-data {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .data-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .data-card {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-card h3 {
+            font-size: 1.5rem;
+            color: #2c8a4a;
+            margin-bottom: 1rem;
+        }
+
+        .data-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-change {
+            font-size: 1rem;
+            color: #4CAF50;
+        }
+
+        .data-change.negative {
+            color: #F44336;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #92df35;
+            color: rgb(24, 23, 23);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #0b400e;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #05410f;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: rgb(17, 71, 11);
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #0d0c0c;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .auth-buttons {
+                margin-top: 1rem;
+            }
+
+            .hero {
+                height: auto;
+                padding: 8rem 0 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btn {
+                width: 80%;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Agro<span>Stock</span></div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="Production.html">Production</a>
+                    <a href="stockmarket.html">Stock Market</a>
+                    <a href="analytics.html">Analytics</a>
+                    <a href="product.html">Products</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-login">Login</a>
+                    <a href="sign-up.html" class="btn btn-signup">SignUp </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Corn Production & Stock Market Management</h1>
+                <p>Track, trade, and forecast corn production and stocks with real-time data and AI-powered insights.</p>
+                <div class="hero-buttons">
+                    <a href="farmer-trader.html"f class="hero-btn btn-primary">Farmer</a>
+                    <a href="farmer-trader.html" class="hero-btn btn-secondary">Traders</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+                <p>Our platform provides comprehensive tools for farmers, traders, and investors to optimize corn production and trading.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Production Tracking</h3>
+                    <p>Monitor planting, growth, and harvesting processes with real-time updates and weather impact analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Stock Trading</h3>
+                    <p>Trade corn stocks seamlessly with integration to major stock exchanges and real-time price tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Forecasting</h3>
+                    <p>Predict market trends and optimize production using machine learning models and historical data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corn Products Section -->
+    <section class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Corn Products</h2>
+                <p>High-quality corn products for consumers and industries</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/sweetcorn.jpg">
+                    </div>
+                    <div class="product-info">
+                        <h3>Sweet Corn</h3>
+                        <p>Freshly harvested sweet corn, perfect for direct consumption and cooking.</p>
+                        <div class="product-price">$2.99 / kg</div>
+                        <a href="product.html" class="product-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/cornflour.jpg">
+                    </div>
+                    <div class="product-info">
+                        <h3>Corn Flour</h3>
+                        <p>Premium quality corn flour for baking and cooking needs.</p>
+                        <div class="product-price">$1.49 / lb</div>
+                        <a href="product.html" class="product-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="images/cornoil.jpg" alt="Corn Oil">
+                    </div>
+                    <div class="product-info">
+                        <h3>Corn Oil</h3>
+                        <p>Healthy cooking oil extracted from corn kernels.</p>
+                        <div class="product-price">$4.99 / liter</div>
+                        <a href="product.html" class="product-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Animal Feed">
+                    </div>
+                    <div class="product-info">
+                        <h3>Corn Animal Feed</h3>
+                        <p>Nutritious corn-based feed for livestock and poultry.</p>
+                        <div class="product-price">$15.99 / bag</div>
+                        <a href="product.html" class="product-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Data Section -->
+    <section class="market-data">
+        <div class="container">
+            <div class="section-title">
+                <h2>Market Data</h2>
+                <p>Real-time corn market statistics and trends</p>
+            </div>
+            <div class="data-cards">
+                <div class="data-card">
+                    <h3>Current Price</h3>
+                    <div class="data-value">$4.25</div>
+                    <div class="data-change">+2.4%</div>
+                </div>
+                <div class="data-card">
+                    <h3>Daily Volume</h3>
+                    <div class="data-value">1.2M</div>
+                    <div class="data-change">+15%</div>
+                </div>
+                <div class="data-card">
+                    <h3>Year High</h3>
+                    <div class="data-value">$5.10</div>
+                    <div class="data-change negative">-3.2%</div>
+                </div>
+                <div class="data-card">
+                    <h3>Year Low</h3>
+                    <div class="data-value">$3.75</div>
+                    <div class="data-change">+8.7%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AgroStock</h3>
+                    <p>Empowering farmers and traders with data-driven corn production and stock market management.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="Production.html">Production</a></li>
+                        <li><a href="stockmarket.html">Stock Market</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Farm Street, AgriCity</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@agrostock.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AgroStock Analytics. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactive Elements -->
+    <script>
+        // Example: Toggle mobile menu (can be expanded)
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('AgroStock System Loaded!');
+            
+            // Simulate real-time market data updates
+        });
+        </script>
+        </body>
+        </html>
